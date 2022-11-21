@@ -18,14 +18,15 @@ class CreatePostsTable extends Migration
             $table->integer('user_id')->index();
             $table->string('title', 70);
             $table->string('subtitle', 155)->nullable();
-            $table->integer('category_id')->nullable();
             $table->longtext('content');
-            $table->text('tags')->nullable();
-            $table->text('imgs_url')->nullable();
-            $table->text('post_url')->nullable();
             $table->longText('history')->nullable();
             $table->timestamps();
             $table->softDeletes();
+            // $table->integer('category_id')->nullable();
+            // $table->text('tags')->nullable();
+            // $table->text('imgs_url')->nullable();
+            // $table->text('post_url')->nullable();
+
         });
     }
 

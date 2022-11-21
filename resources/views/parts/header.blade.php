@@ -32,11 +32,12 @@
 <header class="p-3 text-bg-dark">
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="/" class="nav-link px-2 text-white"><i class="fa-solid fa-house"></i> Inicio</a>
-                </li>
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-between mb-md-0">
+                <img src="./mstile-144x144.png" alt="Logo" width="32" height="32">
+                <a class="btn btn-outline-primary ms-3"  href="{{route('post.index')}}">Inicio</a>
                 @auth
-                <li><a href="#" class="nav-link px-2 text-white">Criar Nota</a></li>
+                    <a class="btn btn-outline-primary mx-3" href="{{route('post.create')}}" role="button">Criar Post</a>
+                    <a class="btn btn-outline-success" href="{{ route('posts.restoreAll') }}" role="button">Restaurar Notas</a>
                 @endauth
             </ul>
             @if (Route::has('login'))

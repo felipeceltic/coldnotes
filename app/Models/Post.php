@@ -15,7 +15,7 @@ class Post extends Model
     use HasFactory, SoftDeletes;
 
     protected $casts = [
-        'tags' => 'array',
+        // 'tags' => 'array',
         'history' => 'array'
     ];
 
@@ -24,9 +24,9 @@ class Post extends Model
         'title',
         'subtitle',
         'content',
-        'tags',
-        'imgs_url',
-        'post_url'
+        // 'tags',
+        // 'imgs_url',
+        // 'post_url'
     ];
 
 

@@ -3,38 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use App\Models\Post;
-use Illuminate\Support\Facades\Auth;
 
-class BlogController extends Controller
+class PostController extends Controller
 {
-    public $page = "blog";
-
-    public $links = [
-        'Início' => '/',
-        'Blog' => '/blog',
-    ];
 
     public function index()
     {
-        $title = "Blog";
+        $title = "ColdNotes";
 
         $posts = Post::paginate(9);
 
-        $links = $this->links;
-
-        $tags = $this->popularTags();
-
-        $categories = Post::getAllCategories();
-
-        return view('blog/index', compact('posts', 'links', 'tags', 'categories', 'title'));
+        return view('posts.index', compact('posts', 'title'));
     }
 
     public function create()
     {
-        $page = $this->page;
-        return view('blog/create', compact('page'));
+        return view('posts.storepost');
     }
 
     public function store(Request $request)
@@ -46,54 +31,31 @@ class BlogController extends Controller
 
         $post = new Post;
 
-        $post->professional_id = Auth()->user()->id;
+        $post->user_id = Auth()->user()->id;
         $post->title = $request->input('title');
         $post->subtitle = $request->input('subtitle');
-        $post->category_id = $request->input('category');
         $post->content = $request->input('content');
-        $post->post_url = Post::generatePostUrl($post->title);
-
-        if($request->input('tags') != null) {
-            $post->tags = Post::convertTagsToStore($request->input('tags'));
-        }
 
         $post->save();
 
-        if($request->hasFile('imgs_url')) {
-
-            $rand = rand(5, 7);
-            $image = $request->file('imgs_url');
-            $imageExtension = ".".$request->file('imgs_url')->extension();
-            $imageName = "post-image-".$post->post_url.'-'.$rand.$imageExtension;
-            $imageUpload = $request->file('imgs_url')->storeAs('blog', $imageName);
-            $post->imgs_url = Storage::url($imageUpload);
-            $post->save();
-
-        }
-
         $request->session()->flash('message', 'Postagem criada!');
-        return redirect()->route('dashboard.blog.myposts');
+        return redirect(route('post.index'));
     }
 
-    public function edit(Post $post)
+    public function edit($id)
     {
-        $page = $this->page;
-
-        if($post->tags != null) {
-            $post->convertTagsToEdit();
-        }
-
-        return view('blog/edit', compact('post', 'page'));
+        return view('posts/updatepost', compact('id'));
     }
 
-    public function update(Request $request, Post $post)
+    public function update(Request $request, $id)
     {
         $data = $request->all();
-        $oldData = $post->toArray();
+        $oldData = Post::find($id);
+        $post = Post::find($id);
 
         // Verifica se houveram alterações
         if($data["title"] == $oldData["title"] && $data["subtitle"] == $oldData["subtitle"] && $data["content"] == $oldData["content"]) {
-            $request->session()->flash('message', 'Nenhuma alteração realizada!');
+            // $request->session()->flash('message', 'Nenhuma alteração realizada!');
             return redirect()->back();
         }
 
@@ -134,7 +96,43 @@ class BlogController extends Controller
         $post->history = $historyPost;
         $post->save();
 
-        $request->session()->flash('message', 'Alterações realizadas com sucesso!');
+        // $request->session()->flash('message', 'Alterações realizadas com sucesso!');
+        return redirect(route('post.index'));
+    }
+
+    /**
+     * soft delete post
+     *
+     * @return void
+     */
+    public function destroy($id)
+    {
+        Post::find($id)->delete();
+
+        return redirect()->back();
+    }
+
+    /**
+     * restore specific post
+     *
+     * @return void
+     */
+    public function restore($id)
+    {
+        Post::withTrashed()->find($id)->restore();
+
+        return redirect()->back();
+    }
+
+    /**
+     * restore all post
+     *
+     * @return response()
+     */
+    public function restoreAll()
+    {
+        Post::onlyTrashed()->restore();
+
         return redirect()->back();
     }
 }
