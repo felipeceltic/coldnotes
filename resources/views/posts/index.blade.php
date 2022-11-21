@@ -37,6 +37,7 @@
 
     </div>
     <!-- Page Content -->
+    @auth
     <div class="d-flex justify-content-center mt-5">
         <h3>Sua(s) Nota(s)!</h3>
     </div>
@@ -72,7 +73,23 @@
             </div>
         @endforeach
     </div>
-
+    @endauth
+    @guest
+    <div class="container my-5">
+    <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+      <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
+        <h1 class="display-4 fw-bold lh-1">Crie sua conta para organizar suas notas!</h1>
+        <p class="lead">Um novo e frio espaço pra você congelar suas ideias rapidamente!</p>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
+          <a href="{{route('register')}}" type="button" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold">CADASTRE-SE!</a>
+        </div>
+      </div>
+      <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden">
+          <img class="rounded-lg-3" src="./android-chrome-512x512.png" alt="Logo" width="720">
+      </div>
+    </div>
+  </div>
+    @endguest
     @stack('modals')
 
     @livewireScripts
