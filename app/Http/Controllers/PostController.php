@@ -12,9 +12,18 @@ class PostController extends Controller
     {
         $title = "ColdNotes";
 
-        $posts = Post::paginate(9);
+        $posts = Post::paginate(7);
 
         return view('posts.index', compact('posts', 'title'));
+    }
+    public function search(Request $request){
+
+        $filter = $request->all();
+
+        $posts = Post::where('title', 'LIKE', "%{$request->search}%")
+                        ->orWhere('content', 'LIKE', "%{$request->search}%")
+                        ->paginate(6);
+        return view('posts.index', compact('posts', 'filter'));
     }
 
     public function create()
@@ -107,8 +116,10 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        Post::find($id)->delete();
-
+        $post = Post::find($id);
+        $post->restored = null;
+        $post->save();
+        $post->delete();
         return redirect()->back();
     }
 
@@ -119,9 +130,21 @@ class PostController extends Controller
      */
     public function restore($id)
     {
-        Post::withTrashed()->find($id)->restore();
+        $post = Post::withTrashed()->find($id);
+        $post->restored = "restaurado";
+        $post->save();
+        $post->restore();
 
         return redirect()->back();
+    }
+
+    public function deletedindex()
+    {
+        $title = "ColdNotes";
+
+        $posts = Post::withTrashed()->where('restored', '=' ,null)->paginate(7);
+
+        return view('posts.deletedindex', compact('posts', 'title'));
     }
 
     /**

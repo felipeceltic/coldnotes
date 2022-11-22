@@ -24,6 +24,7 @@ class Post extends Model
         'title',
         'subtitle',
         'content',
+        'restored',
         // 'tags',
         // 'imgs_url',
         // 'post_url'

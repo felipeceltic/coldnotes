@@ -34,10 +34,10 @@
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-between mb-md-0">
                 <img src="./mstile-144x144.png" alt="Logo" width="32" height="32">
-                <a class="btn btn-outline-primary ms-3"  href="{{route('post.index')}}">Inicio</a>
                 @auth
+                    <a class="btn btn-outline-primary ms-3"  href="{{route('post.index')}}">Inicio</a>
+                    <a class="btn btn-outline-primary ms-3"  href="{{route('post.deletedindex')}}">Deletadas</a>
                     <a class="btn btn-outline-primary mx-3" href="{{route('post.create')}}" role="button">Criar Post</a>
-                    <a class="btn btn-outline-success" href="{{ route('posts.restoreAll') }}" role="button">Restaurar Notas</a>
                 @endauth
             </ul>
             @if (Route::has('login'))
@@ -100,10 +100,12 @@
                         </x-jet-dropdown>
                     </div>
                 @else
-                    <a class="btn btn-primary me-3" data-bs-toggle="modal" data-bs-target="#modalSignin">Entrar</a>
+                    {{-- <a class="btn btn-primary me-3" data-bs-toggle="modal" data-bs-target="#modalSignin">Entrar</a>
                     @if (Route::has('register'))
                         <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalRegister">Cadastar</a>
-                    @endif
+                    @endif --}}
+                    <a class="btn btn-primary me-3" href="{{route('login')}}">Entrar</a>
+                    <a class="btn btn-primary me-3" href="{{route('register')}}">Cadastrar</a>
                 @endauth
             @endif
         </div>

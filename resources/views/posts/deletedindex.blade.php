@@ -38,7 +38,7 @@
     </div>
     <!-- Page Content -->
     @auth
-        <div class="d-flex justify-content-center my-5">
+        <div class="d-flex justify-content-center mt-5 mb-2">
             <form action="{{ route('post.search') }}" method="post">
                 @csrf
                 <div class="input-group mb-3">
@@ -47,6 +47,9 @@
                     <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Buscar</button>
                 </div>
             </form>
+        </div>
+        <div class="d-flex justify-content-center mb-4">
+            <a class="btn btn-outline-success" href="{{ route('post.restoreAll') }}" role="button">Restaurar todas as notas</a>
         </div>
         <div class="row row-cols-1 row-cols-md-3 g-4 mx-4 px-5">
             @foreach ($posts as $p)
@@ -58,12 +61,7 @@
                                 <h6 class="card-subtitle mb-2 text-muted">{{ $p->subtitle }}</h6>
                                 <p class="card-text">{{ $p->content }}</p>
                                 <div class="d-flex justify-content-end">
-                                    <a href="{{ route('post.edit', $p->id) }}" class="btn btn-secondary mx-3">Editar</a>
-                                    <form method="POST" action="{{ route('post.destroy', $p->id) }}">
-                                        @csrf
-                                        <input name="_method" type="hidden" value="DELETE">
-                                        <button type="submit" class="btn btn-danger delete" title='Delete'>Excluir</button>
-                                    </form>
+                                    <a href="{{ route('post.restore', $p->id) }}" class="btn btn-success mx-3">Restaurar</a>
                                 </div>
                             </div>
                             <div class="card-footer">

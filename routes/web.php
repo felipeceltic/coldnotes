@@ -16,6 +16,7 @@ use App\Http\Controllers\PostController as PostController;
 */
 // Principal routes
 Route::get('/', [PostController::class, 'index'])->name('post.index');
+Route::get('/post/deleted', [PostController::class, 'deletedindex'])->name('post.deletedindex');
 Route::get('/create', [PostController::class, 'create'])->name('post.create');
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/cadastro', [AuthController::class, 'cadastro'])->name('cadastro');
@@ -23,9 +24,10 @@ Route::get('/cadastro', [AuthController::class, 'cadastro'])->name('cadastro');
 // Post routes
 
 Route::post('/', [PostController::class, 'index'])->name('post');
-Route::get('/postedit{id}', [PostController::class, 'edit'])->name('post.edit');
-Route::post('/postupdate{id}', [PostController::class, 'update'])->name('post.update');
-Route::post('/poststore', [PostController::class, 'store'])->name('post.store');
-Route::delete('posts/{id}', [PostController::class, 'destroy'])->name('posts.destroy');
-Route::get('posts/restore/{id}', [PostController::class, 'restore'])->name('posts.restore');
-Route::get('posts/restore-all', [PostController::class, 'restoreAll'])->name('posts.restoreAll');
+Route::any('/post/search', [PostController::class, 'search'])->name('post.search');
+Route::get('/post/edit{id}', [PostController::class, 'edit'])->name('post.edit');
+Route::post('/post/update{id}', [PostController::class, 'update'])->name('post.update');
+Route::post('/post/store', [PostController::class, 'store'])->name('post.store');
+Route::delete('post/{id}', [PostController::class, 'destroy'])->name('post.destroy');
+Route::get('post/restore/{id}', [PostController::class, 'restore'])->name('post.restore');
+Route::get('post/restore-all', [PostController::class, 'restoreAll'])->name('post.restoreAll');
