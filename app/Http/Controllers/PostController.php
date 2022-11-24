@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -12,7 +13,8 @@ class PostController extends Controller
     {
         $title = "ColdNotes";
 
-        $posts = Post::paginate(7);
+        $posts = Post::where('user_id', 'LIKE', Auth::user()->id)
+        ->paginate(6);
 
         return view('posts.index', compact('posts', 'title'));
     }
@@ -22,6 +24,7 @@ class PostController extends Controller
 
         $posts = Post::where('title', 'LIKE', "%{$request->search}%")
                         ->orWhere('content', 'LIKE', "%{$request->search}%")
+                        ->andWhere('user_id', 'LIKE', Auth::user()->id)
                         ->paginate(6);
         return view('posts.index', compact('posts', 'filter'));
     }

@@ -50,7 +50,6 @@
         </div>
         <div class="row row-cols-1 row-cols-md-3 g-4 mx-4 px-5">
             @foreach ($posts as $p)
-                @if ($p->user_id == Auth::user()->id)
                     <div class="col">
                         <div class="card">
                             <div class="card-body">
@@ -78,7 +77,6 @@
                             </div>
                         </div>
                     </div>
-                @endif
             @endforeach
         </div>
         <div class="d-flex justify-content-center py-3">
