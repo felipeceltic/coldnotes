@@ -8,6 +8,7 @@
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
     <script src="https://kit.fontawesome.com/f721c01546.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
     <!-- Styles -->
     @livewireStyles
     <!-- Favicon -->
@@ -20,6 +21,8 @@
     <meta name="theme-color" content="#ffffff">
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.slim.min.js"
+        integrity="sha256-w8CvhFs7iHNVUtnSP0YKEg00p9Ih13rlL9zGqvLdePA=" crossorigin="anonymous"></script>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!-- Bootstrap -->
@@ -35,14 +38,16 @@
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-between mb-md-0">
                 <img src="./mstile-144x144.png" alt="Logo" width="32" height="32">
                 @auth
-                    <a class="btn btn-outline-primary ms-3"  href="{{route('post.index')}}">Inicio</a>
-                    <a class="btn btn-outline-primary ms-3"  href="{{route('post.deletedindex')}}">Deletadas</a>
-                    <a class="btn btn-outline-primary mx-3" href="{{route('post.create')}}" role="button">Criar Post</a>
+                    <a class="btn btn-outline-primary ms-3" href="{{ route('post.index') }}">Inicio</a>
+                    <a class="btn btn-outline-primary ms-3" href="{{ route('post.deletedindex') }}">Deletadas</a>
+                    <a class="btn btn-outline-primary mx-3" href="{{ route('post.create') }}" role="button">Criar Post</a>
                 @endauth
             </ul>
             @if (Route::has('login'))
 
                 @auth
+                    <a class="btn btn-success me-3" data-bs-toggle="modal" data-bs-target="#modalDoe"><i
+                            class="bi bi-balloon-heart"></i> Ajude o Projeto!</a>
                     <!-- Settings Dropdown -->
                     <div class="ml-3 relative">
                         <x-jet-dropdown align="right" width="48">
@@ -104,53 +109,37 @@
                     @if (Route::has('register'))
                         <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalRegister">Cadastar</a>
                     @endif --}}
-                    <a class="btn btn-primary me-3" href="{{route('login')}}">Entrar</a>
-                    <a class="btn btn-primary me-3" href="{{route('register')}}">Cadastrar</a>
+                    <a class="btn btn-primary me-3" href="{{ route('login') }}">Entrar</a>
+                    <a class="btn btn-primary me-3" href="{{ route('register') }}">Cadastrar</a>
                 @endauth
             @endif
         </div>
-        <!-- MODAL ENTRAR -->
-        <div class="modal modal-signin py-5" tabindex="-1" role="dialog" id="modalSignin" aria-hidden="true"
+        <!-- MODAL Doe -->
+        <div class="modal modal-signin py-5" tabindex="-1" role="dialog" id="modalDoe" aria-hidden="true"
             style="display: none;">
             <div class="modal-dialog" role="document">
                 <div class="modal-content rounded-4 shadow">
                     <div class="modal-header p-5 pb-4 border-bottom-0">
-                        <h1 class="fw-bold mb-0 fs-2 text-dark">Entrar</h1>
+                        <h1 class="fw-bold mb-0 fs-2 text-dark">Doe!<i class="bi bi-balloon-heart-fill"></i></h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-
-                    <div class="modal-body p-5 pt-0">
-                        <form method="POST" action="{{ route('login') }}">
-                            @csrf
-                            <div>
-                                <x-jet-label for="email" value="{{ __('Email') }}" />
-                                <x-jet-input id="email" class="text-dark block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-                            </div>
-
-                            <div class="mt-4">
-                                <x-jet-label for="password" value="{{ __('Senha') }}" />
-                                <x-jet-input id="password" class="text-dark block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
-                            </div>
-
-                            <div class="block mt-4">
-                                <label for="remember_me" class="flex items-center">
-                                    <x-jet-checkbox id="remember_me" name="remember" />
-                                    <span class="ml-2 text-sm text-gray-600">{{ __('Lembrar de mim') }}</span>
-                                </label>
-                            </div>
-
-                            <div class="flex items-center justify-end mt-4">
-                                @if (Route::has('password.request'))
-                                    <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
-                                        {{ __('Esqueceu sua senha?') }}
-                                    </a>
-                                @endif
-
-                                <x-jet-button class="ml-4">
-                                    {{ __('Entrar') }}
-                                </x-jet-button>
-                            </div>
-                        </form>
+                    <div class="modal-body">
+                        <div class="d-flex justify-content-center px-5">
+                            <p class="h5 text-dark text-center mb-n4">Ajude a mantenedor do projeto doando qualquer valor.</p>
+                        </div>
+                        <div class="d-flex justify-content-center px-5">
+                            <p class="text-dark text-center text-muted mb-n4">todo valor arrecadado será investido nos custos de
+                                hospedagem e manutenção do serviço</p>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <img class="rounded-4" src="./pix.svg" alt="" width="256" height="256">
+                        </div>
+                        <div class="d-flex justify-content-center mb-4">
+                            <input type="text" name="textpix" id="textpix"
+                            value="00020101021126460014br.gov.bcb.pix0124felipeceltic@outlook.com5204000053039865802BR5918LUIZ F DA S ARAUJO6008IGARASSU62070503***63045EA3"
+                            hidden>
+                            <button class="btn btn-success" id="copypix">PIX copia e cola</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -162,7 +151,8 @@
                 <div class="modal-content rounded-4 shadow">
                     <div class="modal-header p-5 pb-4 border-bottom-0">
                         <h1 class="fw-bold mb-0 fs-2 text-dark">Cadastre-se</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
                     </div>
 
                     <div class="modal-body p-5 pt-0">
@@ -170,34 +160,49 @@
                             @csrf
                             <div>
                                 <x-jet-label for="name" value="{{ __('Nome') }}" />
-                                <x-jet-input id="name" class="text-dark block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+                                <x-jet-input id="name" class="text-dark block mt-1 w-full" type="text"
+                                    name="name" :value="old('name')" required autofocus autocomplete="name" />
                             </div>
 
                             <div class="mt-4">
                                 <x-jet-label for="email" value="{{ __('Email') }}" />
-                                <x-jet-input id="email" class="text-dark block mt-1 w-full" type="email" name="email" :value="old('email')" required />
+                                <x-jet-input id="email" class="text-dark block mt-1 w-full" type="email"
+                                    name="email" :value="old('email')" required />
                             </div>
 
                             <div class="mt-4">
                                 <x-jet-label for="password" value="{{ __('Senha') }}" />
-                                <x-jet-input id="password" class="text-dark block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
+                                <x-jet-input id="password" class="text-dark block mt-1 w-full" type="password"
+                                    name="password" required autocomplete="new-password" />
                             </div>
 
                             <div class="mt-4">
                                 <x-jet-label for="password_confirmation" value="{{ __('Confirmar Senha') }}" />
-                                <x-jet-input id="password_confirmation" class="text-dark block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
+                                <x-jet-input id="password_confirmation" class="text-dark block mt-1 w-full"
+                                    type="password" name="password_confirmation" required
+                                    autocomplete="new-password" />
                             </div>
 
                             @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
                                 <div class="mt-4">
                                     <x-jet-label for="terms">
                                         <div class="flex items-center">
-                                            <x-jet-checkbox name="terms" id="terms"/>
+                                            <x-jet-checkbox name="terms" id="terms" />
 
                                             <div class="ml-2">
                                                 {!! __('I agree to the :terms_of_service and :privacy_policy', [
-                                                        'terms_of_service' => '<a target="_blank" href="'.route('terms.show').'" class="underline text-sm text-gray-600 hover:text-gray-900">'.__('Terms of Service').'</a>',
-                                                        'privacy_policy' => '<a target="_blank" href="'.route('policy.show').'" class="underline text-sm text-gray-600 hover:text-gray-900">'.__('Privacy Policy').'</a>',
+                                                    'terms_of_service' =>
+                                                        '<a target="_blank" href="' .
+                                                        route('terms.show') .
+                                                        '" class="underline text-sm text-gray-600 hover:text-gray-900">' .
+                                                        __('Terms of Service') .
+                                                        '</a>',
+                                                    'privacy_policy' =>
+                                                        '<a target="_blank" href="' .
+                                                        route('policy.show') .
+                                                        '" class="underline text-sm text-gray-600 hover:text-gray-900">' .
+                                                        __('Privacy Policy') .
+                                                        '</a>',
                                                 ]) !!}
                                             </div>
                                         </div>
@@ -206,7 +211,8 @@
                             @endif
 
                             <div class="flex items-center justify-end mt-4">
-                                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
+                                <a class="underline text-sm text-gray-600 hover:text-gray-900"
+                                    href="{{ route('login') }}">
                                     {{ __('Já possui conta?') }}
                                 </a>
 
@@ -221,3 +227,12 @@
         </div>
     </div>
 </header>
+<script type="text/javascript">
+    const text = document.getElementById('textpix');
+    const copyButton = document.getElementById('copypix');
+
+    copyButton.addEventListener('click', () => {
+        text.select();
+        document.execCommand('copy');
+    });
+</script>
