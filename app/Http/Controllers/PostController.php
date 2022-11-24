@@ -12,8 +12,12 @@ class PostController extends Controller
     public function index()
     {
         $title = "ColdNotes";
+        if (Auth::user() == null) {
+            return view('posts.index');
+        }
+        $user = Auth::user()->id;
 
-        $posts = Post::where('user_id', 'LIKE', Auth::user()->id)
+        $posts = Post::where('user_id', 'LIKE', $user->id)
         ->paginate(6);
 
         return view('posts.index', compact('posts', 'title'));

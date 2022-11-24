@@ -14,38 +14,22 @@ class Post extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $casts = [
-        // 'tags' => 'array',
-        'history' => 'array'
-    ];
-
     protected $fillable = [
         'user_id',
         'title',
         'subtitle',
         'content',
         'restored',
-        // 'tags',
-        // 'imgs_url',
-        // 'post_url'
+        'history',
     ];
 
-
-    public static function generatePostUrl($title)
-    {
-        $url = strtolower($title);
-
-        while(strpos($url, " ")) {
-            $url = str_replace(" ", "-", $url);
-        }
-
-        return $url;
-    }
-
-    public function getPostUrl()
-    {
-        return url('/blog/publicacao', [ $this->user->uri, $this->post_url ]);
-    }
+    protected $casts = [
+        'title' => 'encrypted',
+        'subtitle' => 'encrypted',
+        'content' => 'encrypted',
+        'restored' => 'encrypted',
+        'history' => 'array',
+    ];
 
     public function user()
     {
