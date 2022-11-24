@@ -49,7 +49,8 @@
             </form>
         </div>
         <div class="d-flex justify-content-center mb-4">
-            <a class="btn btn-outline-success" href="{{ route('post.restoreAll') }}" role="button">Restaurar todas as notas</a>
+            <a class="btn btn-outline-success" href="{{ route('post.restoreAll') }}" role="button">Restaurar todas as
+                notas</a>
         </div>
         <div class="row row-cols-1 row-cols-md-3 g-4 mx-4 px-5">
             @foreach ($posts as $p)
@@ -60,8 +61,15 @@
                                 <h5 class="card-title">{{ $p->title }}</h5>
                                 <h6 class="card-subtitle mb-2 text-muted">{{ $p->subtitle }}</h6>
                                 <p class="card-text">{{ $p->content }}</p>
-                                <div class="d-flex justify-content-end">
-                                    <a href="{{ route('post.restore', $p->id) }}" class="btn btn-success mx-3">Restaurar</a>
+                                <div class="d-flex justify-content-between">
+                                    <a href="{{ route('post.restore', $p->id) }}"
+                                        class="btn btn-success mx-3">Restaurar</a>
+                                    <form id="hardform" method="POST" action="{{ route('post.hard.destroy', $p->id) }}">
+                                        @csrf
+                                        <input name="_method" type="hidden" value="DELETE">
+                                    </form>
+                                    <button type="submit" class="btn btn-danger" id="hard.destroy">Excluir
+                                        permanentemente</button>
                                 </div>
                             </div>
                             <div class="card-footer">
@@ -108,5 +116,23 @@
 
     @livewireScripts
 </body>
+<script type="text/javascript">
+
+    const hardButton = document.getElementById('hard.destroy');
+
+    function submitForm() {
+        const form = document.getElementById("hardform");
+        form.submit();
+    }
+
+    hardButton.addEventListener('click', () => {
+
+        const resultado = confirm('Tem certeza de que deseja excluir a nota permanentemente?');
+        if (resultado == true) {
+            submitForm();
+        }
+    });
+
+</script>
 
 </html>

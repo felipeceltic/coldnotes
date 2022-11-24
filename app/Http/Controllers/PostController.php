@@ -132,6 +132,18 @@ class PostController extends Controller
     }
 
     /**
+     * hard delete post
+     *
+     * @return void
+     */
+    public function harddestroy($id)
+    {
+        $post = Post::withTrashed()->find($id);
+        $post->forceDelete();
+        return redirect()->back();
+    }
+
+    /**
      * restore specific post
      *
      * @return void

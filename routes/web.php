@@ -29,5 +29,6 @@ Route::get('/post/edit{id}', [PostController::class, 'edit'])->name('post.edit')
 Route::post('/post/update{id}', [PostController::class, 'update'])->name('post.update');
 Route::post('/post/store', [PostController::class, 'store'])->name('post.store');
 Route::delete('post/{id}', [PostController::class, 'destroy'])->name('post.destroy');
+Route::delete('posthard{id}', [PostController::class, 'harddestroy'])->name('post.hard.destroy');
 Route::get('post/restore/{id}', [PostController::class, 'restore'])->name('post.restore');
 Route::get('post/restore-all', [PostController::class, 'restoreAll'])->name('post.restoreAll');
