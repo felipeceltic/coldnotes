@@ -48,14 +48,14 @@
                 </div>
             </form>
         </div>
-        <div class="d-flex justify-content-center mb-4">
+        {{-- <div class="d-flex justify-content-center mb-4">
             <a class="btn btn-outline-success" href="{{ route('post.restoreAll') }}" role="button">Restaurar todas as
                 notas</a>
-        </div>
+        </div> --}}
         <div class="row row-cols-1 row-cols-md-3 g-4 mx-4 px-5">
             @foreach ($posts as $p)
                 @if ($p->user_id == Auth::user()->id)
-                    <div class="col">
+                    <div class="col-sm-6">
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">{{ $p->title }}</h5>

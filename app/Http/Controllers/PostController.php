@@ -126,6 +126,7 @@ class PostController extends Controller
     {
         $post = Post::find($id);
         $post->restored = null;
+        $post->deleted_at = date(time());
         $post->save();
         $post->delete();
         return redirect()->back();
@@ -151,7 +152,7 @@ class PostController extends Controller
     public function restore($id)
     {
         $post = Post::withTrashed()->find($id);
-        $post->restored = "restaurado";
+        $post->restored = date(time());
         $post->save();
         $post->restore();
 
@@ -174,6 +175,12 @@ class PostController extends Controller
      */
     public function restoreAll()
     {
+        $posts = Post::where('deleted_at', '<>', null);
+        dd($posts);
+        foreach ($posts as $p) {
+            $p->restored = date(time());
+            $p->save();
+        }
         Post::onlyTrashed()->restore();
 
         return redirect()->back();
