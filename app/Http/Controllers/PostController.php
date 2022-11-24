@@ -50,6 +50,7 @@ class PostController extends Controller
         $post->title = $request->input('title');
         $post->subtitle = $request->input('subtitle');
         $post->content = $request->input('content');
+        $post->restored = 'criada';
 
         $post->save();
 
