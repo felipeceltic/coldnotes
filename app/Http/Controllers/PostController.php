@@ -77,6 +77,7 @@ class PostController extends Controller
             'title' => '',
             'subtitle' => '',
             'content' => '',
+            'restored' => 'editado',
             'updated_at' => date("Y-m-d H:i:s")
         ];
 
@@ -145,7 +146,10 @@ class PostController extends Controller
     {
         $title = "ColdNotes";
 
-        $posts = Post::withTrashed()->where('restored', '=' ,null)->paginate(7);
+        $posts = Post::withTrashed()
+                    ->where('restored', '=' ,null)
+                    ->andWhere('user_id', 'LIKE', Auth::user()->id)
+                    ->paginate(7);
 
         return view('posts.deletedindex', compact('posts', 'title'));
     }
