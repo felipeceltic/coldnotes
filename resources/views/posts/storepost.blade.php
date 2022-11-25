@@ -1,25 +1,3 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'ColdNotes') }}</title>
-
-    <!-- Fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
-
-    <!-- Styles -->
-    @livewireStyles
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-</head>
-
 <body class="font-sans antialiased">
     <!-- Page Heading -->
     <div>
@@ -38,7 +16,7 @@
     <div class="d-flex justify-content-center mt-5">
         <h3>Crie sua Nota!</h3>
     </div>
-    <div class="d-flex justify-content-center mt-5">
+    <div class="d-flex justify-content-center">
         <form method="POST" action="{{ route('post.store') }}">
             @csrf
             <div class="mb-3">
@@ -63,5 +41,5 @@
 
     @livewireScripts
 </body>
-
+@include("parts.footer")
 </html>

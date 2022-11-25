@@ -1,27 +1,3 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'ColdNotes') }}</title>
-
-    <!-- Fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
-
-    <!-- Styles -->
-    @livewireStyles
-
-    <!-- Scripts -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
-</head>
-
 <body class="font-sans antialiased">
     <!-- Page Heading -->
     <div>
@@ -38,7 +14,7 @@
     </div>
     <!-- Page Content -->
     @auth
-        <div class="d-flex justify-content-center mt-5 mb-2">
+        <div class="d-flex justify-content-center mt-4">
             <form action="{{ route('post.search') }}" method="post">
                 @csrf
                 <div class="input-group mb-3">
@@ -48,10 +24,6 @@
                 </div>
             </form>
         </div>
-        {{-- <div class="d-flex justify-content-center mb-4">
-            <a class="btn btn-outline-success" href="{{ route('post.restoreAll') }}" role="button">Restaurar todas as
-                notas</a>
-        </div> --}}
         <div class="row row-cols-1 row-cols-md-3 g-4 mx-4 px-5">
             @foreach ($posts as $p)
                 @if ($p->user_id == Auth::user()->id)
@@ -62,7 +34,7 @@
                                 <h6 class="card-subtitle mb-2 text-muted">{{ $p->subtitle }}</h6>
                                 <p class="card-text">{{ $p->content }}</p>
                                 <a href="{{ route('post.restore', $p->id) }}"
-                                    class="btn btn-outline-success w-100 my-3">Restaurar</a>
+                                    class="btn btn-outline-success w-100 mt-2">Restaurar</a>
                                 <form id="hardform" method="POST" action="{{ route('post.hard.destroy', $p->id) }}">
                                     @csrf
                                     <input name="_method" type="hidden" value="DELETE">
@@ -114,6 +86,8 @@
 
     @livewireScripts
 </body>
+@include("parts.footer")
+
 <script type="text/javascript">
 
     const hardButton = document.getElementById('hard.destroy');
