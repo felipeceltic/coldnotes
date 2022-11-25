@@ -56,24 +56,22 @@
                                 <h5 class="card-title">{{ $p->title }}</h5>
                                 <h6 class="card-subtitle mb-2 text-muted">{{ $p->subtitle }}</h6>
                                 <p class="card-text">{{ $p->content }}</p>
-                                <div class="d-flex justify-content-end">
-                                    <a href="{{ route('post.edit', $p->id) }}" class="btn btn-secondary mx-3">Editar</a>
-                                    <form method="POST" action="{{ route('post.destroy', $p->id) }}">
-                                        @csrf
-                                        <input name="_method" type="hidden" value="DELETE">
-                                        <button type="submit" class="btn btn-danger delete" title='Delete'>Excluir</button>
-                                    </form>
-                                </div>
+                                <a href="{{ route('post.edit', $p->id) }}" class="btn btn-outline-secondary w-100 my-3">Editar</a>
+                                <form method="POST" action="{{ route('post.destroy', $p->id) }}">
+                                    @csrf
+                                    <input name="_method" type="hidden" value="DELETE">
+                                    <button type="submit" class="btn btn-danger w-100 delete" title='Delete'>Excluir</button>
+                                </form>
                             </div>
                             <div class="card-footer">
-                                <small class="text-muted">
+                                <p class="text-muted text-end lh-1" style="font-size: 0.9rem">
                                     @php
                                         setlocale(LC_ALL, null);
                                         setlocale(LC_ALL, 'pt_BR');
                                         $d1 = strtotime($p->updated_at);
                                         echo strftime('Atualizado em ' . '%d' . ' de ' . '%B' . ' de ' . '%Y', $d1);
                                     @endphp
-                                </small>
+                                </p>
                             </div>
                         </div>
                     </div>

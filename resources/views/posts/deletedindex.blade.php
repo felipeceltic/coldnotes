@@ -61,26 +61,24 @@
                                 <h5 class="card-title">{{ $p->title }}</h5>
                                 <h6 class="card-subtitle mb-2 text-muted">{{ $p->subtitle }}</h6>
                                 <p class="card-text">{{ $p->content }}</p>
-                                <div class="d-flex justify-content-between">
-                                    <a href="{{ route('post.restore', $p->id) }}"
-                                        class="btn btn-success mx-3">Restaurar</a>
-                                    <form id="hardform" method="POST" action="{{ route('post.hard.destroy', $p->id) }}">
-                                        @csrf
-                                        <input name="_method" type="hidden" value="DELETE">
-                                    </form>
-                                    <button type="submit" class="btn btn-danger" id="hard.destroy">Excluir
-                                        permanentemente</button>
-                                </div>
+                                <a href="{{ route('post.restore', $p->id) }}"
+                                    class="btn btn-outline-success w-100 my-3">Restaurar</a>
+                                <form id="hardform" method="POST" action="{{ route('post.hard.destroy', $p->id) }}">
+                                    @csrf
+                                    <input name="_method" type="hidden" value="DELETE">
+                                </form>
+                                <button type="submit" class="btn btn-danger w-100" id="hard.destroy">Excluir
+                                    permanentemente</button>
                             </div>
                             <div class="card-footer">
-                                <small class="text-muted">
+                                <p class="text-muted text-end lh-1" style="font-size: 0.9rem">
                                     @php
                                         setlocale(LC_ALL, null);
                                         setlocale(LC_ALL, 'pt_BR');
                                         $d1 = strtotime($p->updated_at);
                                         echo strftime('Atualizado em ' . '%d' . ' de ' . '%B' . ' de ' . '%Y', $d1);
                                     @endphp
-                                </small>
+                                </p>
                             </div>
                         </div>
                     </div>

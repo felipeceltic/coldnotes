@@ -5,9 +5,7 @@
 
     <title>{{ config('app.name', 'ColdNotes') }}</title>
 
-    <!-- Fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
-    <script src="https://kit.fontawesome.com/f721c01546.js" crossorigin="anonymous"></script>
+    <!-- Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
     <!-- Styles -->
     @livewireStyles
@@ -19,24 +17,28 @@
     <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
+
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="https://code.jquery.com/jquery-3.6.1.slim.min.js"
-        integrity="sha256-w8CvhFs7iHNVUtnSP0YKEg00p9Ih13rlL9zGqvLdePA=" crossorigin="anonymous"></script>
+
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
+
     </script>
 </head>
 <header class="p-3 text-bg-dark">
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-between mb-md-0">
-                <img src="./mstile-144x144.png" alt="Logo" width="32" height="32">
+            <a class="navbar-brand pe-sm-3" href="/">
+                <img class="my-1" src="/mstile-144x144.png" alt="Logo" width="32" height="32">
+            </a>
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-between mb-md-0 mt-1">
                 @auth
                     <a class="btn btn-outline-primary ms-3" href="{{ route('post.index') }}">Inicio</a>
                     <a class="btn btn-outline-primary ms-3" href="{{ route('post.deletedindex') }}">Deletadas</a>
@@ -105,10 +107,6 @@
                         </x-jet-dropdown>
                     </div>
                 @else
-                    {{-- <a class="btn btn-primary me-3" data-bs-toggle="modal" data-bs-target="#modalSignin">Entrar</a>
-                    @if (Route::has('register'))
-                        <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalRegister">Cadastar</a>
-                    @endif --}}
                     <a class="btn btn-primary me-3" href="{{ route('login') }}">Entrar</a>
                     <a class="btn btn-primary me-3" href="{{ route('register') }}">Cadastrar</a>
                 @endauth
@@ -140,87 +138,6 @@
                             hidden>
                             <button class="btn btn-success" id="copypix">PIX copia e cola</button>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- MODAL CADASTRO -->
-        <div class="modal modal-signin py-5" tabindex="-1" role="dialog" id="modalRegister" aria-hidden="true"
-            style="display: none;">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content rounded-4 shadow">
-                    <div class="modal-header p-5 pb-4 border-bottom-0">
-                        <h1 class="fw-bold mb-0 fs-2 text-dark">Cadastre-se</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                    </div>
-
-                    <div class="modal-body p-5 pt-0">
-                        <form method="POST" action="{{ route('register') }}">
-                            @csrf
-                            <div>
-                                <x-jet-label for="name" value="{{ __('Nome') }}" />
-                                <x-jet-input id="name" class="text-dark block mt-1 w-full" type="text"
-                                    name="name" :value="old('name')" required autofocus autocomplete="name" />
-                            </div>
-
-                            <div class="mt-4">
-                                <x-jet-label for="email" value="{{ __('Email') }}" />
-                                <x-jet-input id="email" class="text-dark block mt-1 w-full" type="email"
-                                    name="email" :value="old('email')" required />
-                            </div>
-
-                            <div class="mt-4">
-                                <x-jet-label for="password" value="{{ __('Senha') }}" />
-                                <x-jet-input id="password" class="text-dark block mt-1 w-full" type="password"
-                                    name="password" required autocomplete="new-password" />
-                            </div>
-
-                            <div class="mt-4">
-                                <x-jet-label for="password_confirmation" value="{{ __('Confirmar Senha') }}" />
-                                <x-jet-input id="password_confirmation" class="text-dark block mt-1 w-full"
-                                    type="password" name="password_confirmation" required
-                                    autocomplete="new-password" />
-                            </div>
-
-                            @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
-                                <div class="mt-4">
-                                    <x-jet-label for="terms">
-                                        <div class="flex items-center">
-                                            <x-jet-checkbox name="terms" id="terms" />
-
-                                            <div class="ml-2">
-                                                {!! __('I agree to the :terms_of_service and :privacy_policy', [
-                                                    'terms_of_service' =>
-                                                        '<a target="_blank" href="' .
-                                                        route('terms.show') .
-                                                        '" class="underline text-sm text-gray-600 hover:text-gray-900">' .
-                                                        __('Terms of Service') .
-                                                        '</a>',
-                                                    'privacy_policy' =>
-                                                        '<a target="_blank" href="' .
-                                                        route('policy.show') .
-                                                        '" class="underline text-sm text-gray-600 hover:text-gray-900">' .
-                                                        __('Privacy Policy') .
-                                                        '</a>',
-                                                ]) !!}
-                                            </div>
-                                        </div>
-                                    </x-jet-label>
-                                </div>
-                            @endif
-
-                            <div class="flex items-center justify-end mt-4">
-                                <a class="underline text-sm text-gray-600 hover:text-gray-900"
-                                    href="{{ route('login') }}">
-                                    {{ __('Já possui conta?') }}
-                                </a>
-
-                                <x-jet-button class="ml-4">
-                                    {{ __('Cadastrar') }}
-                                </x-jet-button>
-                            </div>
-                        </form>
                     </div>
                 </div>
             </div>
