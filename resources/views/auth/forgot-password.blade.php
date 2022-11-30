@@ -1,11 +1,19 @@
+<head>
+    <meta charset="utf-8">
+    <title>{{ config('app.name', 'ColdNotes') }}</title>
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+</head>
 <x-guest-layout>
     <x-jet-authentication-card>
         <x-slot name="logo">
-            <x-jet-authentication-card-logo />
+            <img src="./mstile-144x144.png" alt="Logo" width="100" height="100">
         </x-slot>
 
         <div class="mb-4 text-sm text-gray-600">
-            {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
+            {{ __('Esqueceu sua senha? Sem problemas. Basta nos informar seu endereço de e-mail e enviaremos um e-mail com um link de redefinição de senha que permitirá que você escolha uma nova.') }}
         </div>
 
         @if (session('status'))
@@ -26,7 +34,7 @@
 
             <div class="flex items-center justify-end mt-4">
                 <x-jet-button>
-                    {{ __('Email Password Reset Link') }}
+                    {{ __('Enviar link de recuperação') }}
                 </x-jet-button>
             </div>
         </form>

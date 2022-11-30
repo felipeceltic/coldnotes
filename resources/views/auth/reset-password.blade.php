@@ -1,7 +1,15 @@
+<head>
+    <meta charset="utf-8">
+    <title>{{ config('app.name', 'ColdNotes') }}</title>
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+</head>
 <x-guest-layout>
     <x-jet-authentication-card>
         <x-slot name="logo">
-            <x-jet-authentication-card-logo />
+            <img src="./mstile-144x144.png" alt="Logo" width="100" height="100">
         </x-slot>
 
         <x-jet-validation-errors class="mb-4" />
