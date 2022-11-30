@@ -135,10 +135,9 @@
                             <img class="rounded-4" src="./pix.svg" alt="" width="256" height="256">
                         </div>
                         <div class="d-flex justify-content-center mb-4">
-                            <input type="text" name="textpix" id="textpix"
-                            value="00020101021126460014br.gov.bcb.pix0124felipeceltic@outlook.com5204000053039865802BR5918LUIZ F DA S ARAUJO6008IGARASSU62070503***63045EA3"
-                            hidden>
-                            <button class="btn btn-success" id="copypix">PIX copia e cola</button>
+                            <input id="chavepix" type="text" value="felipeceltic@outlook.com" hidden />
+
+                            <button class="btn btn-success" id="clipboardCopy">Copiar chave PIX</button>
                         </div>
                     </div>
                 </div>
@@ -147,11 +146,11 @@
     </div>
 </header>
 <script type="text/javascript">
-    const text = document.getElementById('textpix');
-    const copyButton = document.getElementById('copypix');
 
-    copyButton.addEventListener('click', () => {
-        text.select();
-        document.execCommand('copy');
-    });
+document.getElementById('clipboardCopy').addEventListener('click', clipboardCopy);
+async function clipboardCopy() {
+  let text = document.querySelector("#chavepix").value;
+  await navigator.clipboard.writeText(text);
+}
+
 </script>
