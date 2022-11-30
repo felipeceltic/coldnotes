@@ -43,8 +43,8 @@
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-between mb-md-0 mt-1">
                 @auth
                     <a class="btn btn-outline-primary ms-3" href="{{ route('post.index') }}">Inicio</a>
-                    <a class="btn btn-outline-primary ms-3" href="{{ route('post.deletedindex') }}">Deletadas</a>
-                    <a class="btn btn-outline-primary mx-3" href="{{ route('post.create') }}" role="button">Criar Post</a>
+                    {{-- <a class="btn btn-outline-primary ms-3" href="{{ route('post.deletedindex') }}">Deletadas</a> --}}
+                    <a class="btn btn-primary mx-3" href="{{ route('post.create') }}" role="button">Criar uma nota</a>
                 @endauth
             </ul>
             @if (Route::has('login'))
@@ -86,6 +86,10 @@
 
                                 <x-jet-dropdown-link class="text-decoration-none" href="{{ route('profile.show') }}">
                                     {{ __('Meu Perfil') }}
+                                </x-jet-dropdown-link>
+
+                                <x-jet-dropdown-link class="text-decoration-none text-danger" href="{{ route('post.deletedindex') }}">
+                                    {{ __('Posts Deletados') }}
                                 </x-jet-dropdown-link>
 
                                 @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
